@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OOPJava_TX2_2
+{
+    public class Employee : Person
+    {
+        private int salary;
+        public Employee(string name, string address, int salary) : base(name, address)
+        {
+            this.salary = salary;
+        }
+        public int getSalary()
+        {
+            return salary;
+        }
+        public void setSalary()
+        {
+            this.salary = salary;
+        }
+        public override void display()
+        {
+            Console.WriteLine($"Employee -> Name: {getName()}, Address: {getAddress()}, Salary: {salary}");
+        }
+    }
+}
