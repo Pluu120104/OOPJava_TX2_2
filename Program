@@ -1,0 +1,168 @@
+namespace OOPJava_TX2_2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Employee> employees = new List<Employee>()
+            {
+                new Employee("Luu Pham Hai Phong", "Ha Noi", 5000),
+                new Employee("Luu Minh Hai", "Bac Ninh", 6000),
+                new Employee("Pham Lan Anh", "Nghe An", 5500),
+                new Employee("Luu Khanh Linh", "Ho Chi Minh", 7000),
+                new Employee("Ta Thi Hat", "Can Tho", 5200),
+                new Employee("Pham Dinh Tuyet", "Hue", 6300),
+                new Employee("Nguyen Thi Truong", "Nha Trang", 5800),
+                new Employee("Pham Ngoc Anh", "Vinh", 5400),
+                new Employee("Tran Duy Hung", "Quang Ninh", 6200),
+                new Employee("Tran Minh Hanh", "Thanh Hoa", 5900),
+            };
+
+            List<Customer> customers = new List<Customer>()
+            {
+                new Customer("Luu Van Co","Ha Noi",10000),
+                new Customer("Nguyen Hoang Minh","Hai Phong",15000),
+                new Customer("Pham Truong Giang","Da Nang",12000),
+                new Customer("Tran Hai Dang","Ho Chi Minh",20000),
+                new Customer("Le Van Dam","Can Tho",9000),
+                new Customer("Vu Hai Long","Hue",17000),
+                new Customer("Tran Yen Nhi","Nha Trang",11000),
+                new Customer("Nguyen Duy Duc","Vinh",8000),
+                new Customer("Tran Van Hau","Quang Ninh",14000),
+                new Customer("Le Van Vu","Thanh Hoa",13000),
+            };
+
+            bool exit = false;
+            while (!exit)
+            {
+                Console.WriteLine("Menu");
+                Console.WriteLine("1. Them nhan vien");
+                Console.WriteLine("2. Them khach hang");
+                Console.WriteLine("3. Tim nhan vien co muc luong cao nhat");
+                Console.WriteLine("4. Tim khach hang co so du nho nhat");
+                Console.WriteLine("5. Tim nhan vien theo ten");
+                Console.WriteLine("6. Thoat");
+                Console.WriteLine("Nhap mot so de chon tuy chon: ");
+                Console.WriteLine("");
+
+                int choice;
+                if (int.TryParse(Console.ReadLine(), out choice))
+                {
+                    switch (choice)
+                    {
+                        case 1:
+                            try
+                            {
+                                Console.Write("Nhap ten nhan vien muon them: ");
+                                string empName = Console.ReadLine();
+                                Console.Write("Nhap dia chi cua nhan vien: ");
+                                string empAddress = Console.ReadLine();
+                                Console.Write("Nhap muc luong cua nhan vien: ");
+                                int empSalary = int.Parse(Console.ReadLine());
+                                employees.Add(new Employee(empName, empAddress, empSalary));
+                                Console.WriteLine("Them nhan vien thanh cong");
+                                Console.WriteLine("");
+                            }
+                            catch (Exception  ex)
+                            {
+                                Console.WriteLine($"Loi: {ex.Message}");
+                                Console.WriteLine("");
+                            }
+                            break;
+                       
+                        case 2:
+                            try
+                            {
+                                Console.Write("Nhap ten khach hang muon them: ");
+                                string custName = Console.ReadLine();
+                                Console.Write("Nhap dia chi khach hang: ");
+                                string custAddress = Console.ReadLine();
+                                Console.Write("Nhap so du khach hang: ");
+                                int custBalance = int.Parse(Console.ReadLine());
+                                customers.Add(new Customer(custName, custAddress, custBalance));
+                                Console.WriteLine("Them khach hang thanh cong");
+                                Console.WriteLine("");
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Loi: {ex.Message}");
+                                Console.WriteLine("");
+                            }
+                            break;
+                      
+                        case 3:
+                            if (employees.Count == 0)
+                            {
+                                Console.WriteLine("Khong co nhan vien nao.");
+                            }   
+                            else
+                            {
+                                Employee highestSalaryEmployee = null;
+                                foreach (var emp in employees) 
+                                {
+                                    if ( highestSalaryEmployee == null || emp.getSalary() > highestSalaryEmployee.getSalary())
+                                    {
+                                        highestSalaryEmployee = emp;
+                                    }
+                                }
+                                Console.WriteLine("Nhan vien co luong cao nhat: ");
+                                highestSalaryEmployee.display();
+                                Console.WriteLine("");
+                            }
+                            break;
+
+                        case 4:
+                            if (customers.Count == 0)
+                            {
+                                Console.WriteLine("Khong co khach hang nao.");
+                            }
+                            else
+                            {
+                                Customer lowestBalanceCustomer = null;
+                                foreach (var cust in customers)
+                                {
+                                    if(lowestBalanceCustomer == null || cust.getbalance() > lowestBalanceCustomer.getbalance())
+                                    {
+                                        lowestBalanceCustomer = cust;
+                                    }
+                                }
+                                Console.WriteLine("Khach hang co so du nho nhat: ");
+                                lowestBalanceCustomer.display();
+                                Console.WriteLine("");
+                            }
+                            break;
+                        case 5:
+                            Console.Write("Nhap ten nhan vien muon tim: ");
+                            string searchName = Console.ReadLine();
+                            var findEmployee = employees.FindAll(emp => emp.getName().Equals(searchName, StringComparison.OrdinalIgnoreCase));
+                            
+                            if(findEmployee.Count >0)
+                            {
+                                Console.WriteLine("Nhan vien tim thay: ");
+                                foreach (var emp in findEmployee)
+                                {
+                                    emp.display();
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Khong tim thay nhan vien voi ten da nhap.");
+                            }
+                            break;
+                        case 6:
+                            exit = true;
+                            break;
+
+                        default:
+                            Console.WriteLine("Tuy chon khong hop le, vui long thu lai.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Du lieu nhap khong hop le, vui long nhap mot so. ");
+                }
+            }
+        }
+    }
+}
